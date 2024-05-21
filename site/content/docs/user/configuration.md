@@ -67,6 +67,19 @@ apiVersion: kind.x-k8s.io/v1alpha4
 name: app-1-cluster
 {{< /codeFromInline >}}
 
+### Label the nodes of the cluster
+
+You can label all the nodes of the cluster by specifying a set of labels in your config:
+
+{{< codeFromInline lang="yaml" >}}
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+labels:
+  type: ci
+{{< /codeFromInline >}}
+
+This labels both the nodes in the Kubernetes API and the containers on the host.
+
 ### Feature Gates
 
 Kubernetes [feature gates] can be enabled cluster-wide across all Kubernetes
@@ -398,6 +411,8 @@ nodes:
   labels:
     tier: backend
 {{< /codeFromInline >}}
+
+This also adds labels to the container in the host.
 
 ### Kubeadm Config Patches
 

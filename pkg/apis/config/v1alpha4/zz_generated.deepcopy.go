@@ -25,6 +25,13 @@ package v1alpha4
 func (in *Cluster) DeepCopyInto(out *Cluster) {
 	*out = *in
 	out.TypeMeta = in.TypeMeta
+	if in.Labels != nil {
+		in, out := &in.Labels, &out.Labels
+		*out = make(map[string]string, len(*in))
+		for key, val := range *in {
+			(*out)[key] = val
+		}
+	}
 	if in.Nodes != nil {
 		in, out := &in.Nodes, &out.Nodes
 		*out = make([]Node, len(*in))

@@ -209,6 +209,10 @@ func commonArgs(cluster string, cfg *config.Cluster, networkName string, nodeNam
 		args = append(args, "-e", "KIND_DNS_SEARCH="+strings.Join(*cfg.Networking.DNSSearch, " "))
 	}
 
+	for labelKey, labelValue := range cfg.Labels {
+		args = append(args, "--label", fmt.Sprintf("%s=%s", labelKey, labelValue))
+	}
+
 	return args, nil
 }
 
@@ -253,6 +257,10 @@ func runArgsForNode(node *config.Node, clusterIPFamily config.ClusterIPFamily, n
 	switch node.Role {
 	case config.ControlPlaneRole:
 		args = append(args, "-e", "KUBECONFIG=/etc/kubernetes/admin.conf")
+	}
+
+	for labelKey, labelValue := range node.Labels {
+		args = append(args, "--label", fmt.Sprintf("%s=%s", labelKey, labelValue))
 	}
 
 	// finally, specify the image to run

@@ -24,6 +24,9 @@ type Cluster struct {
 	// Optional, this will be overridden by --name / KIND_CLUSTER_NAME
 	Name string `yaml:"name,omitempty" json:"name,omitempty"`
 
+	// Labels are the labels with which all the nodes will be labeled
+	Labels map[string]string `yaml:"labels,omitempty" json:"labels,omitempty"`
+
 	// Nodes contains the list of nodes defined in the `kind` Cluster
 	// If unset this will default to a single control-plane node
 	// Note that if more than one control plane is specified, an external

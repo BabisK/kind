@@ -209,8 +209,14 @@ func getKubeadmConfig(cfg *config.Cluster, data kubeadm.ConfigData, node nodes.N
 	}
 
 	// configure the node labels
+	if len(cfg.Labels) > 0 {
+		data.NodeLabels = hashMapLabelsToCommaSeparatedLabels(cfg.Labels)
+	}
 	if len(configNode.Labels) > 0 {
-		data.NodeLabels = hashMapLabelsToCommaSeparatedLabels(configNode.Labels)
+		if len(data.NodeLabels) > 0 {
+			data.NodeLabels += ","
+		}
+		data.NodeLabels += hashMapLabelsToCommaSeparatedLabels(configNode.Labels)
 	}
 
 	// set the node role
